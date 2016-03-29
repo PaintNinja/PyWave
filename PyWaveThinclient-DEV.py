@@ -2,6 +2,7 @@ VerFloat = str(0.10) # We need to convert it to a string here otherwise Python w
 Version = 'Pre-Alpha v' + VerFloat
 Title = 'PyWave ' + Version
 VerifyServ = 'https://waveapi.gadget-guy.com/auth'
+WebappCaching = True
 
 print(Title)
 print('''
@@ -54,7 +55,7 @@ if arg0 == "credits":
     Credits()
 # Show the Credits if the "credits" argument is specified
 
-
+# NOTE: ManualMode needs to be made as a function ( def ManualMode() ) here.
 
 #################### Auth1
 print("Auth1")
@@ -62,6 +63,36 @@ print()
 
 # Setup time-based, randomised temporary cache to prepare for authentication
 
-staticTime = str(datetime.datetime.now().time())
-# Set the current time as the variable "staticTime", converting the current time to a string to make it static
+import datetime
+unformattedTime = datetime.datetime.now().time()
+formattedTime = unformattedTime.strftime("%H%M%S")
+staticTime = str(formattedTime)
+# Set the current time as the variable "staticTime", converting the current time to a string to make it static. formattedTime will return the time in HoursMinutesSeconds without any colons or spaces in-between.
 
+# Note: Apps by default are stored in /usr/bin on Linux and %ProgramFiles% on Windows
+if os.path.isdir(str(BINDIR) + "\Wave\cache") == False:
+    # if the directory doesn't exist, create it
+	os.makedirs(str(BINDIR) + "\Wave\cache", exist_ok=True)
+	# Note: exist_ok tells Python that it's okay if the directory already exists when we attempt to create it, so don't throw an error and crash because of that. However, this feature requires Python v3.4.1+
+	
+import platform
+if str(platform.system()) == "Windows":
+    # Hide the cache directory from non-pro-users once made on Windows to help prevent mistakes and mess caused by users deleting the folders.
+	os.system('attrib +H /S /D ' + str(BINDIR) + "\Wave\cache")
+	
+# Check if WebappCaching is enabled
+if WebappCaching == True:
+    verifyTmp = "Wave\\cache\\" + str(arg0)
+	# Note: Double backslashes are needed as the backslash character is the escape character in Python
+else:
+    import random
+    verifyTmp = "Wave\\cache\\" + staticTime + "-" + str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9))
+	# Make verifyTmp contain the captured staticTime from earlier, then a dash and 4 random numbers. The numbers have to be converted to a string with str() in order to stop Python from crashing as usual
+
+if os.path.isdir(str(BINDIR) + str(verifyTmp)) == False:
+    # make the verifyTmp directory
+	os.makedirs(str(BINDIR) + str(verifyTmp), exist_ok=True)
+	
+if str(platform.system()) == "Windows":
+    # Hide the verifyTmp directory if on Windows
+	os.system('attrib +H /S /D ' + str(BINDIR) + str(verifyTmp))
