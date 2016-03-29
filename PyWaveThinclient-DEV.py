@@ -57,6 +57,8 @@ if arg0 == "credits":
 
 # NOTE: ManualMode needs to be made as a function ( def ManualMode() ) here.
 
+
+
 #################### Auth1
 print("Auth1")
 print()
@@ -96,3 +98,41 @@ if os.path.isdir(str(BINDIR) + str(verifyTmp)) == False:
 if str(platform.system()) == "Windows":
     # Hide the verifyTmp directory if on Windows
 	os.system('attrib +H /S /D ' + str(BINDIR) + str(verifyTmp))
+
+
+
+#################### Auth2
+print("Auth2")
+print()
+
+# Authenticate with the server
+print("Authenticating...")
+
+# Check if the webapp exists already. If not, get it with cURL.
+if os.path.exists(str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp") == False:
+    # Get it on Windows using cURL.exe
+	if str(platform.system()) == "Windows":
+	    os.system("call " + str(BINDIR) + '\\Wave\\libs\\cURL.exe -H -http2 --tcp-nodelay -A "PyWave/v0.10 (Pre-Alpha)" -s -o ' + str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp " + VerifyServ + "/" + str(arg0) + ".webapp")
+	
+	# Get it on Linux using cURL (needs testing)
+	if str(platform.system()) == "Linux":
+	    os.system('curl -H -http2 --tcp-nodelay -A "PyWave/v0.10 (Pre-Alpha)" -s -o ' + str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp " + VerifyServ + "/" + str(arg0) + ".webapp")
+
+if os.path.exists(str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp") == False:
+    # todo: change colour to red text on black background
+    print()
+    print("Error: Failed to authenticate.")
+    print("Stacktrace:")
+    print("           Auth2")
+    print("              \Download webapp")
+    import shutil
+    shutil.rmtree(str(BINDIR) + str(verifyTmp), ignore_errors=True)
+	# delete the verifyTmp directory
+	
+	if str(platform.system()) == "mWindows":
+	    os.system("pause")
+	else:
+	    input("Press any key and hit enter to continue . . .")
+	# todo: pause console here
+	# todo: change colour back to white text on black background
+	# todo: quit gracefully
