@@ -129,7 +129,7 @@ if os.path.exists(str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp") =
     shutil.rmtree(str(BINDIR) + str(verifyTmp), ignore_errors=True)
 	# delete the verifyTmp directory
 	
-	if str(platform.system()) == "mWindows":
+	if str(platform.system()) == "Windows":
 	    os.system("pause")
 	else:
 	    input("Press any key and hit enter to continue . . .")
