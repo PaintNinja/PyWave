@@ -135,3 +135,26 @@ if os.path.exists(str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp") =
         input("Press any key and hit enter to continue . . .")
     # todo: change colour back to white text on black background
     sys.exit()
+
+
+
+#################### Auth3
+print("Auth3")
+print()
+
+import yaml
+
+# Read the webapp file
+with open(str(BINDIR) + str(verifyTmp) + "\\" + str(arg0) + ".webapp", 'r') as f:
+    webapp = yaml.load(f)
+
+_app-name = webapp["Name"]
+_app-id = webapp["ID"]
+_app-link = webapp["Link"]
+_app-algorithm = webapp["Algorithm"]
+# need one that reads the hash of the appropriate algorithm here
+_app-compressed = webapp["Compressed"]
+_app-state = webapp["State"]
+_app-prio = webapp["Priority"]
+
+_app-ver = webapp["Version"]
