@@ -158,3 +158,61 @@ _app-state = webapp["State"]
 _app-prio = webapp["Priority"]
 
 _app-ver = webapp["Version"]
+
+
+
+#################### ProcessReq5
+print("ProcessReq5")
+print()
+
+# Extract the filename and extension from the webapp's link
+_app-filename, _app-fileextension = os.path.splitext(_app-link)
+# This gives the filename and fileExt in their own variables
+
+_app-filenameandext = _app-filename + _app-fileextension
+# This combines both the filename and fileExt into a single variable
+
+
+
+#################### ProcessReq6
+print("ProcessReq6")
+print()
+
+_app-path = str(BINDIR) + str("Wave\\webapps\\") + str(_app-name)
+
+if os.path.isdir(str(_app-path)) == False:
+    # make the webapp's _app-path directory
+    os.makedirs(str(_app-path), exist_ok=True)
+
+if str(platform.system()) == "Windows":
+    # Hide the webapp directory if on Windows
+    os.system('attrib +H /S /D ' + str(BINDIR) + str("Wave\\webapps"))
+
+# Check if the webapp already exists as we only hash the webapp after it's been downloaded. Not every single launch.
+if os.path.exists(str(_app-path) + "\\" + str(_app-filenameandext)) == True:
+    # ProcessReq6-1
+    # App exists, check if just been downloaded or already installed.
+    #
+    # Check for a waveflag that indicates that Wave has just downloaded the app
+    if os.path.exists(str(_app-path) + "\\justdled.waveflag" == True:
+        # The app has just been downloaded. Check its hash
+        #
+        # First, delete the waveflag
+        os.remove(str(_app-path) + "\\justdled.waveflag")
+        #
+        # Verify1
+        Verify1()
+
+
+
+def Verify1():
+    print("Verify1")
+    print()
+    # This is a case-insensitive if statement in Python. Calculate the MD5 hash
+    if str(_app-algorithm) == str("MD5").upper():
+        # todo: calculate md5 hash of _app-path\\_app-filenameandext and store it in a variable called "_actual-hash"
+        # http://stackoverflow.com/questions/16874598/how-do-i-calculate-the-md5-checksum-of-a-file-in-python
+    #
+    # Calculate the SHA1 hash
+    if str(_app-algorithm) == str("SHA1").upper():
+        # todo: calculate sha1 hash
